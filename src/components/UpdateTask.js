@@ -6,8 +6,8 @@ function UpdateTask() {
     const [title,setTitle]=useState("");
     const [desc,setDesc]=useState("");
 
-    function Update(){
-        
+    function Update(e){
+        e.preventDefault();
     }
 
     return (

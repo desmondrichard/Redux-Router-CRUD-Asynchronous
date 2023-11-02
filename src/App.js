@@ -5,6 +5,7 @@ import AddTask from "./components/AddTask";
 import TasksList from "./components/TasksList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UpdateTask from "./components/UpdateTask";
+import Error404Page from "./components/Error404Page";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' element={<AddTask />} />
           <Route path='/tasklist' element={<TasksList />} />
           <Route path='/updatetask' element={<UpdateTask />}/>
+          <Route path='/*' element={<Error404Page />}/>
         </Routes>
       </BrowserRouter>
 
