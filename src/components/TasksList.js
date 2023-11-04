@@ -4,16 +4,17 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { getTasksFromServer } from './Slices/TasksSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedTask } from './Slices/TasksSlice'; 
 
 function TasksList() {
   const dispatch = useDispatch();
   const { tasksList } = useSelector((state) => state.tasks);
   const navigate = useNavigate();
 
-  function updateTask() {
-    // e.preventDefault();
+  function updateTask(task) {
     console.log("update");
     navigate('/updatetask');
+    dispatch(setSelectedTask(task))
   }
 
   useEffect(() => {
@@ -44,7 +45,7 @@ function TasksList() {
                   <td>{task.id}</td>
                   <td>{task.title}</td>
                   <td>{task.desc}</td>
-                  <td className='text-center'><Button variant="primary" style={{ marginRight: "6px" }} onClick={() => updateTask()}><i className="bi bi-pencil-square"></i></Button><Button variant="primary" onClick={() => deleteTask()}><i className="bi bi-x-square-fill"></i></Button></td>
+                  <td className='text-center'><Button variant="primary" style={{ marginRight: "6px" }} onClick={() => updateTask(task)}><i className="bi bi-pencil-square"></i></Button><Button variant="primary" onClick={() => deleteTask()}><i className="bi bi-x-square-fill"></i></Button></td>
                 </tr>
               )
             })

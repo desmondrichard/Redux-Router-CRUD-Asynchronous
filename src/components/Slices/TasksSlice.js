@@ -43,6 +43,26 @@ async(task,{rejectWithValue})=>{
 }
 )
 
+//Patch:
+export const updateTaskInServer = createAsyncThunk("tasks/updateTaskInServer",
+async(task,{rejectWithValue})=>{
+    const options={
+        method:"PATCH",
+        body:JSON.stringify(task),
+        headers:{
+            'content-type':"application/json;charset=UTF-8"
+        }
+    }
+    const response=await fetch(base_url+'/'+task.id,options)
+    if(response.ok){
+        const jsonResponse=await response.json();
+        return jsonResponse;
+    }else{
+        return rejectWithValue({error:'No tasks found'})
+    }
+}
+)
+
 //added export below
 export const tasksSlice = createSlice({
     name: 'tasksSlice',
@@ -92,6 +112,23 @@ export const tasksSlice = createSlice({
 
         })
         .addCase(addTasksToServer.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.error=action.payload.error;
+        
+        })
+        //PATCH
+        .addCase(updateTaskInServer.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(updateTaskInServer.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.error='';
+            state.tasksList=state.tasksList.map((a)=>{
+                return a.id===action.payload.id?action.payload:a
+            })
+
+        })
+        .addCase(updateTaskInServer.rejected,(state,action)=>{
             state.isLoading=false;
             state.error=action.payload.error;
         
