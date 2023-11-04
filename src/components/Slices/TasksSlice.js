@@ -8,11 +8,12 @@ const initialState = {
     error: '',
 }
 
+const base_url="http://localhost:5000/tasks";
 
-
+//GET:
 export const getTasksFromServer = createAsyncThunk("tasks/getTasksFromServer",
 async(_,{rejectWithValue})=>{
-    const response=await fetch("http://localhost:5000/tasks")
+    const response=await fetch(base_url)
     if(response.ok){
         const jsonResponse=await response.json();
         return jsonResponse;
@@ -22,6 +23,25 @@ async(_,{rejectWithValue})=>{
 }
 )
 
+//POST:
+export const addTasksToServer = createAsyncThunk("tasks/addTasksToServer",
+async(task,{rejectWithValue})=>{
+    const options={
+        method:"POST",
+        body:JSON.stringify(task),
+        headers:{
+            'content-type':"application/json;charset=UTF-8"
+        }
+    }
+    const response=await fetch(base_url,options)
+    if(response.ok){
+        const jsonResponse=await response.json();
+        return jsonResponse;
+    }else{
+        return rejectWithValue({error:'No tasks found'})
+    }
+}
+)
 
 //added export below
 export const tasksSlice = createSlice({
@@ -45,7 +65,9 @@ export const tasksSlice = createSlice({
 
     },
     extraReducers:(builder)=>{
-        builder.addCase(getTasksFromServer.pending,(state)=>{
+        //GET:
+        builder
+        .addCase(getTasksFromServer.pending,(state)=>{
             state.isLoading=true;
         })
         .addCase(getTasksFromServer.fulfilled,(state,action)=>{
@@ -58,6 +80,21 @@ export const tasksSlice = createSlice({
             state.isLoading=false;
             state.error=action.payload.error;
             state.tasksList=[];
+        })
+        //POST
+        .addCase(addTasksToServer.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(addTasksToServer.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.error='';
+            state.tasksList.push(action.payload);
+
+        })
+        .addCase(addTasksToServer.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.error=action.payload.error;
+        
         })
     }
 })

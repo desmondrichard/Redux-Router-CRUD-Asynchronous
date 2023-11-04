@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTasksToServer } from './Slices/TasksSlice';
 
 
 function AddTask() {
+    const dispatch=useDispatch();
     const { tasksList, error } = useSelector((state) => state.tasks);
 
     const navigate = useNavigate();
@@ -16,6 +18,7 @@ function AddTask() {
     function Submit(e) {
         e.preventDefault();
         console.log({ title, desc });
+        dispatch(addTasksToServer({title,desc}));
         navigate("/tasklist");
         setTitle('');
         setDesc('');
