@@ -6,8 +6,8 @@ function UpdateTask() {
     const [title,setTitle]=useState("");
     const [desc,setDesc]=useState("");
 
-    function Update(e){
-        e.preventDefault();
+    function Update(){
+        
     }
 
     return (
@@ -19,11 +19,11 @@ function UpdateTask() {
                     <Form>
                         <Form.Group className="mb-3" controlId="formGroupTitle">
                             <Form.Label>Task Title</Form.Label>
-                            <Form.Control type="text" defaultValue={title} placeholder="Enter Task Title" onChange={(e) => setTitle(e.target.value)} />
+                            <Form.Control type="text" Value={title} placeholder="Enter Task Title" onChange={(e) => setTitle(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formGroupDesc">
                             <Form.Label>Task Decription</Form.Label>
-                            <Form.Control type="text" defaultValue={desc} placeholder="Enter Task Description" onChange={(e) => setDesc(e.target.value)} />
+                            <Form.Control type="text" Value={desc} placeholder="Enter Task Description" onChange={(e) => setDesc(e.target.value)} />
                         </Form.Group>
                         <div className='text-end'>
                             <Button type="submit" variant="success" onClick={(e) => Update(e)}>Update User</Button>
