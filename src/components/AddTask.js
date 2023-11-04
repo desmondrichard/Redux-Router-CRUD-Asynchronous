@@ -15,7 +15,8 @@ function AddTask() {
         navigate("/tasklist")
     }
     return (
-        <div className='container'>
+        
+        <div className='container' style={{paddingTop:"12%"}}>
             <div>
                 <h3 className='text-center text-primary'>Todo List</h3>
                 <h4 className='text-center text-danger'>Currently 0 tasks are pending</h4>
@@ -31,11 +32,12 @@ function AddTask() {
                         <Form.Control type="text" placeholder="Enter Task Description" onChange={(e)=>setDesc(e.target.value)}/>
                     </Form.Group>
                     <div className='text-end'>
-                    <Button type="submit" variant="success" onClick={(e)=>Submit(e)}>Add Task</Button>
+                    <Button type="submit" variant="success" style={{marginBottom:"10px"}} onClick={(e)=>Submit(e)}>Add Task</Button>
                     </div>
                 </Form>
             </div>
         </div>
+        
     )
 }
 
