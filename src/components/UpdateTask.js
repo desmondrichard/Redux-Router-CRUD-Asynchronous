@@ -35,11 +35,13 @@ function UpdateTask() {
                     <Form>
                         <Form.Group className="mb-3" controlId="formGroupTitle">
                             <Form.Label>Task Title</Form.Label>
-                            <Form.Control type="text" Value={title} placeholder="Enter Task Title" onChange={(e) => setTitle(e.target.value)} />
+                            <Form.Control type="text" value={title} placeholder="Enter Task Title" onChange={(e) => setTitle(e.target.value)} />
+                            {/*Note: changed value from Value in above line  */}
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formGroupDesc">
                             <Form.Label>Task Decription</Form.Label>
-                            <Form.Control type="text" Value={desc} placeholder="Enter Task Description" onChange={(e) => setDesc(e.target.value)} />
+                            <Form.Control type="text" value={desc} placeholder="Enter Task Description" onChange={(e) => setDesc(e.target.value)} />
+                            {/*Note: changed value from Value in above line  */}
                         </Form.Group>
                         <div className='text-end'>
                             <Button type="submit" variant="success" onClick={(e) => Update(e)}>Update User</Button>

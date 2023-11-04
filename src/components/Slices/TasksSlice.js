@@ -63,6 +63,23 @@ async(task,{rejectWithValue})=>{
 }
 )
 
+//Delete
+export const deleteTaskFromServer = createAsyncThunk("tasks/deleteTaskFromServer",
+async(task,{rejectWithValue})=>{
+    const options={
+        method:"DELETE",
+       
+    }
+    const response=await fetch(base_url+'/'+task.id,options)
+    if(response.ok){
+        const jsonResponse=await response.json();
+        return jsonResponse;
+    }else{
+        return rejectWithValue({error:'No tasks found'})
+    }
+}
+)
+
 //added export below
 export const tasksSlice = createSlice({
     name: 'tasksSlice',
@@ -129,6 +146,19 @@ export const tasksSlice = createSlice({
 
         })
         .addCase(updateTaskInServer.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.error=action.payload.error;
+        
+        })
+        //Delete
+        .addCase(deleteTaskFromServer.pending,(state)=>{
+            state.isLoading=true;
+        })
+        .addCase(deleteTaskFromServer.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.error='';
+        })
+        .addCase(deleteTaskFromServer.rejected,(state,action)=>{
             state.isLoading=false;
             state.error=action.payload.error;
         
